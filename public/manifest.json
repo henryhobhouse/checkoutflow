@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "React App w Flow",
+  "name": "Create React App with Flow",
   "icons": [
     {
       "src": "favicon.ico",
