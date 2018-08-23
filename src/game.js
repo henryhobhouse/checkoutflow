@@ -1,14 +1,14 @@
+/* @flow */
+
 import React from "react";
 import {Board} from "./board";
-
-/* @flow */
 
 export class Game extends React.Component {
     render() {
         return (
             <div className="game">
                 <div className="game-board">
-                    <Board />
+                    <Board player={"t"}/>
                 </div>
                 <div className="game-info">
                     <div>{/* status */}</div>

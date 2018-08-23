@@ -1,15 +1,28 @@
-import React from "react";
-import {Square} from "./square";
-
 /* @flow */
 
-export class Board extends React.Component {
-    renderSquare(i) {
-        return <Square />;
+import React from "react";
+import {Square} from "./square";
+import {playerName} from "./player-name";
+
+type Props = {
+    player: playerName;
+}
+
+export class Board extends React.Component<Props> {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            squares: Array(9).fill(null)
+        }
+    }
+
+    renderSquare(id: number) {
+        return <Square content={this.state.squares[id]} />;
     }
 
     render() {
-        const status = "Next player: X";
+        const status = `Next player: ${this.props.player}`;
 
         return (
             <div>
@@ -32,4 +45,5 @@ export class Board extends React.Component {
             </div>
         );
     }
+
 }
