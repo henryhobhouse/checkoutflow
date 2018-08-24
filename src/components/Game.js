@@ -6,44 +6,50 @@ import {winningLines} from "../winningLines";
 import type {PlayerName} from "../playerName";
 import {GameStatus} from "./GameStatus";
 
-export class Game extends React.Component {
+const player1: PlayerName = "X";
+const player2: PlayerName = "O";
 
-    player1 = "X";
-    player2 = "O";
+export class Game extends React.Component {
 
     constructor() {
         super();
         this.state = {
             squares: Array(9).fill(null),
             winner: null,
-            player1IsNext: true,
+            currentPlayer: player1,
         }
     }
 
-    getPlayer(): PlayerName {
-        return this.state.player1IsNext ? this.player1 : this.player2;
+    renderStatus() {
+        const { winner, currentPlayer } = this.state;
+        let status;
+        if (winner) {
+            status = `Winner is ${ winner }`;
+        } else {
+            status = `Next player: ${ currentPlayer }`;
+        }
+        return <GameStatus>{status}</GameStatus>
+    }
+
+    renderBoard() {
+        const { squares, currentPlayer, winner } = this.state;
+        return (
+            <Board squares={ squares }
+                   currentPlayer={ currentPlayer }
+                   onChange={ (squares) => this.onChange(squares) }
+                   winner={ winner }
+            />
+        )
     }
 
     render() {
-        let status;
-        if (this.state.winner) {
-            status = `Winner is ${this.state.winner}`;
-        } else {
-            status = `Next player: ${this.getPlayer()}`;
-        }
         return (
             <div className="game">
                 <div className="game-board">
-                    <Board player1={this.player1}
-                           player2={this.player2}
-                           winner={ this.state.winner }
-                           squares={ this.state.squares }
-                           player1IsNext={ this.state.player1IsNext }
-                           onChange={ (squares) => this.onChange(squares) }
-                    />
+                    {this.renderBoard()}
                 </div>
                 <div className="game-info">
-                    <GameStatus>{status}</GameStatus>
+                    {this.renderStatus()}
                     <ol>{/* TODO */}</ol>
                 </div>
             </div>
@@ -51,22 +57,19 @@ export class Game extends React.Component {
     }
 
     onChange(squares) {
-        console.log(squares);
+        const nextPlayer = this.state.currentPlayer === player1 ? player2 : player1;
         this.setState({
             squares: squares,
-            player1IsNext: !this.state.player1IsNext,
+            currentPlayer: nextPlayer,
             winner: this.calculateWinner(squares)
         });
-        if (this.state.winner) {
-            this.update
-        }
+        if (this.state.winner) {}
     }
 
     calculateWinner(squares): null | PlayerName {
         for (const line of winningLines) {
             const [a, b, c] = line;
             if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-                console.log("true");
                 return squares[a];
             }
         }

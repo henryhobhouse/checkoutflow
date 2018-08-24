@@ -2,7 +2,7 @@ import React from "react";
 import type {PlayerName} from "../playerName";
 
 type Props = {
-    children: null | PlayerName,
+    children: PlayerName,
 }
 
 export function GameStatus(props: Props) {

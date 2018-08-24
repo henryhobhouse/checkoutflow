@@ -6,61 +6,48 @@ import type {PlayerName} from "../playerName";
 import {Game} from "./Game";
 
 type Props = {
-    player1: string;
-    player2: string;
-    winner: null | PlayerName;
     squares: Array;
-    player1IsNext: boolean;
+    currentPlayer: PlayerName;
     onChange: Game.prototype.onChange;
+    winner: null | PlayerName;
 };
 
-export class Board extends React.Component<Props> {
+export function Board(props: Props) {
 
-    constructor(props: Props) {
-        super(props);
-    }
-
-    renderSquare(id: string): Square {
+    function renderSquare(id: string): Square {
         return <Square
-            content={this.props.squares[id]}
+            content={props.squares[id]}
             onClick={ () => {
-                if (!this.props.squares[id]) {
-                    this.handleClick(id)
-                }
+                handleClick(id)
             }}
         />;
     }
 
-    handleClick(id): void {
-        const squares = this.props.squares.slice();
-        squares[id] = this.getPlayer();
-        this.props.onChange(squares);
+    function handleClick(id): void {
+        if (props.squares[id] || props.winner) return;
+        const squares = props.squares.slice();
+        squares[id] = props.currentPlayer;
+        props.onChange(squares);
     }
 
-    getPlayer(): PlayerName {
-        return this.props.player1IsNext ? this.props.player1 : this.props.player2;
-    }
-
-    render(): void {
-        return (
-            <div>
-                <div className="board-row">
-                    {this.renderSquare(0)}
-                    {this.renderSquare(1)}
-                    {this.renderSquare(2)}
-                </div>
-                <div className="board-row">
-                    {this.renderSquare(3)}
-                    {this.renderSquare(4)}
-                    {this.renderSquare(5)}
-                </div>
-                <div className="board-row">
-                    {this.renderSquare(6)}
-                    {this.renderSquare(7)}
-                    {this.renderSquare(8)}
-                </div>
+    return (
+        <div>
+            <div className="board-row">
+                {renderSquare(0)}
+                {renderSquare(1)}
+                {renderSquare(2)}
             </div>
-        );
-    }
+            <div className="board-row">
+                {renderSquare(3)}
+                {renderSquare(4)}
+                {renderSquare(5)}
+            </div>
+            <div className="board-row">
+                {renderSquare(6)}
+                {renderSquare(7)}
+                {renderSquare(8)}
+            </div>
+        </div>
+    );
 
 }
