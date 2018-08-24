@@ -1,9 +1,7 @@
 import type {Board} from "./board";
 
-type Move = {
-    squares: Board
+type Step = {
+    move: Board
 }
 
-export type History = {
-    Array<Move>
-}
+export type History = Array<Step>;

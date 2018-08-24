@@ -8,6 +8,7 @@ import {GameStatus} from "./GameStatus";
 import {GameHistory} from "./GameHistory";
 import type {SquareValues} from "../squareValues";
 import type {Board} from "../board";
+import type {History} from "../history";
 
 const player1: PlayerName = "X";
 const player2: PlayerName = "O";
@@ -16,7 +17,7 @@ const boardSize: number = 9;
 type Props = {}
 
 type State = {
-    history: Array<Board>,
+    history: History,
     currentPlayer: PlayerName,
     winner: SquareValues,
     stepNumber: number,
