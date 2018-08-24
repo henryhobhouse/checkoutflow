@@ -5,6 +5,7 @@ import {Board} from "./Board";
 import {winningLines} from "../winningLines";
 import type {PlayerName} from "../playerName";
 import {GameStatus} from "./GameStatus";
+import {GameHistory} from "./GameHistory";
 
 const player1: PlayerName = "X";
 const player2: PlayerName = "O";
@@ -15,9 +16,12 @@ export class Game extends React.Component {
     constructor() {
         super();
         this.state = {
-            squares: Game.initialiseSquares(boardSize),
+            history: [{
+                squares: Game.initialiseSquares(boardSize),
+            }],
             currentPlayer: player1,
             winner: null,
+            stepNumber: 0,
         }
     }
 
@@ -35,6 +39,10 @@ export class Game extends React.Component {
         return null;
     }
 
+    static getPlayer(condition) {
+        return condition ? player1 : player2;
+    }
+
     renderStatus() {
         const { winner, currentPlayer } = this.state;
         let status;
@@ -47,12 +55,22 @@ export class Game extends React.Component {
     }
 
     renderBoard() {
-        const { squares, currentPlayer, winner } = this.state;
+        const { currentPlayer, winner, history, stepNumber } = this.state;
+        const currentSquares = history[stepNumber].squares;
         return (
-            <Board squares={ squares }
+            <Board squares={ currentSquares }
                    currentPlayer={ currentPlayer }
                    onChange={ (squares) => this.onChange(squares) }
                    winner={ winner }
+            />
+        )
+    }
+
+    renderHistory() {
+        return (
+            <GameHistory
+                history={this.state.history}
+                jumpTo={ (move) => this.jumpTo(move) }
             />
         )
     }
@@ -65,20 +83,34 @@ export class Game extends React.Component {
                 </div>
                 <div className="game-info">
                     {this.renderStatus()}
-                    <ol>{/* TODO */}</ol>
+                    <ol>{this.renderHistory()}</ol>
                 </div>
             </div>
         );
     }
 
-    onChange(squares) {
-        const nextPlayer = this.state.currentPlayer === player1 ? player2 : player1;
+    jumpTo(step) {
+        const {history, winner} = this.state;
+        const winnerUpdate = step === history.length - 1 ? winner : null;
         this.setState({
-            squares: squares,
+            stepNumber: step,
+            currentPlayer: Game.getPlayer((step % 2) === 0),
+            winner: winnerUpdate,
+        })
+    }
+
+    onChange(squares) {
+        const {currentPlayer} = this.state;
+        const history = this.state.history.slice(0, this.state.stepNumber + 1);
+        const nextPlayer = Game.getPlayer(currentPlayer !== player1);
+        this.setState({
+            history: history.concat([{
+                squares: squares,
+            }]),
+            stepNumber: history.length,
             currentPlayer: nextPlayer,
             winner: Game.calculateWinner(squares)
         });
-        if (this.state.winner) {}
     }
 
 }

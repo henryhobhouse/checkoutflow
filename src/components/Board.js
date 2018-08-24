@@ -12,42 +12,45 @@ type Props = {
     winner: null | PlayerName;
 };
 
-export function Board(props: Props) {
+export class Board extends React.Component<Props> {
 
-    function renderSquare(id: string): Square {
+    renderSquare(id: string): Square {
         return <Square
-            content={props.squares[id]}
+            content={this.props.squares[id]}
             onClick={ () => {
-                handleClick(id)
+                this.handleClick(id)
             }}
         />;
     }
 
-    function handleClick(id: number): void {
-        if (props.squares[id] || props.winner) return;
-        const squares = props.squares.slice();
-        squares[id] = props.currentPlayer;
-        props.onChange(squares);
+    handleClick(id: number): void {
+        const {squares, winner, currentPlayer, onChange} = this.props;
+        if (squares[id] || winner) return;
+        const newSquares = squares.slice();
+        newSquares[id] = currentPlayer;
+        onChange(newSquares);
     }
 
-    return (
-        <div>
-            <div className="board-row">
-                {renderSquare(0)}
-                {renderSquare(1)}
-                {renderSquare(2)}
+    render() {
+        return (
+            <div>
+                <div className="board-row">
+                    {this.renderSquare(0)}
+                    {this.renderSquare(1)}
+                    {this.renderSquare(2)}
+                </div>
+                <div className="board-row">
+                    {this.renderSquare(3)}
+                    {this.renderSquare(4)}
+                    {this.renderSquare(5)}
+                </div>
+                <div className="board-row">
+                    {this.renderSquare(6)}
+                    {this.renderSquare(7)}
+                    {this.renderSquare(8)}
+                </div>
             </div>
-            <div className="board-row">
-                {renderSquare(3)}
-                {renderSquare(4)}
-                {renderSquare(5)}
-            </div>
-            <div className="board-row">
-                {renderSquare(6)}
-                {renderSquare(7)}
-                {renderSquare(8)}
-            </div>
-        </div>
-    );
+        )
+    };
 
 }

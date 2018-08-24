@@ -10,6 +10,7 @@ type Props = {
 }
 
 export function Square(props: Props) {
+
     return (
         <button
             className="square"
@@ -18,4 +19,5 @@ export function Square(props: Props) {
             {props.content}
         </button>
     );
+
 }
