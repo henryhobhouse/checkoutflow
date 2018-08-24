@@ -1,6 +1,7 @@
 /* @flow */
 
 import React from "react";
+import {Game} from "./Game";
 
 type Props = {
     history: Array;

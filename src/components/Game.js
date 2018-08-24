@@ -90,8 +90,8 @@ export class Game extends React.Component {
     }
 
     jumpTo(step) {
-        const {history, winner} = this.state;
-        const winnerUpdate = step === history.length - 1 ? winner : null;
+        const {history} = this.state;
+        const winnerUpdate = Game.calculateWinner(history[step].squares);
         this.setState({
             stepNumber: step,
             currentPlayer: Game.getPlayer((step % 2) === 0),
