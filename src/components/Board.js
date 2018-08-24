@@ -23,7 +23,7 @@ export function Board(props: Props) {
         />;
     }
 
-    function handleClick(id): void {
+    function handleClick(id: number): void {
         if (props.squares[id] || props.winner) return;
         const squares = props.squares.slice();
         squares[id] = props.currentPlayer;

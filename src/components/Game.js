@@ -8,16 +8,31 @@ import {GameStatus} from "./GameStatus";
 
 const player1: PlayerName = "X";
 const player2: PlayerName = "O";
+const boardSize: number = 9;
 
 export class Game extends React.Component {
 
     constructor() {
         super();
         this.state = {
-            squares: Array(9).fill(null),
-            winner: null,
+            squares: Game.initialiseSquares(boardSize),
             currentPlayer: player1,
+            winner: null,
         }
+    }
+
+    static initialiseSquares(numberOfSquares: number) {
+        return Array(numberOfSquares).fill(null)
+    }
+
+    static calculateWinner(squares): null | PlayerName {
+        for (const line of winningLines) {
+            const [a, b, c] = line;
+            if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+                return squares[a];
+            }
+        }
+        return null;
     }
 
     renderStatus() {
@@ -61,18 +76,9 @@ export class Game extends React.Component {
         this.setState({
             squares: squares,
             currentPlayer: nextPlayer,
-            winner: this.calculateWinner(squares)
+            winner: Game.calculateWinner(squares)
         });
         if (this.state.winner) {}
     }
 
-    calculateWinner(squares): null | PlayerName {
-        for (const line of winningLines) {
-            const [a, b, c] = line;
-            if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-                return squares[a];
-            }
-        }
-        return null;
-    }
 }
