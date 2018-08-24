@@ -1,11 +1,11 @@
 /* @flow */
 
 import React from "react";
-import {Game} from "./Game";
+import type {Board} from "../board";
 
 type Props = {
-    history: Array;
-    jumpTo: Game.prototype.jumpTo;
+    history: Array<Board>;
+    jumpTo: (Board) => void;
 }
 
 export class GameHistory extends React.Component<Props> {
@@ -13,7 +13,7 @@ export class GameHistory extends React.Component<Props> {
     render() {
         const {history, jumpTo} = this.props;
         return history.map( (step, move) => {
-            const description = move ? `Go to move #${move}` : `Go to game start`;
+            const description = !move ? `Go to game start` : `Go to move #${move}`;
             return (
                 <li key={move}>
                     <button onClick={() => jumpTo(move)}>{description}</button>

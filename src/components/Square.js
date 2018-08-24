@@ -2,11 +2,10 @@
 
 import type {PlayerName} from "../playerName";
 import React from "react";
-import {Board} from "./Board";
 
 type Props = {
     content: PlayerName,
-    onClick: Board.prototype.handleClick
+    onClick: () => void,
 }
 
 export function Square(props: Props) {

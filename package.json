@@ -10,7 +10,7 @@
     "scripts": {
         "flow": "flow",
         "babel-build": "babel src/ -d lib/",
-        "start": "react-scripts start",
+        "start": "flow && react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test --env=jsdom",
         "eject": "react-scripts eject"

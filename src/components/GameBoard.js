@@ -1,20 +1,20 @@
 /* @flow */
 
-import React from "react";
+import * as React from "react";
 import {Square} from "./Square";
 import type {PlayerName} from "../playerName";
-import {Game} from "./Game";
+import type {SquareValues} from "../squareValues";
 
 type Props = {
-    squares: Array;
+    squares: Array<SquareValues>;
     currentPlayer: PlayerName;
-    onChange: Game.prototype.onChange;
-    winner: null | PlayerName;
+    onChange: (SquareValues) => void;
+    winner: SquareValues;
 };
 
-export class Board extends React.Component<Props> {
+export class GameBoard extends React.Component<Props> {
 
-    renderSquare(id: string): Square {
+    renderSquare(id: number) {
         return <Square
             content={this.props.squares[id]}
             onClick={ () => {
