@@ -4,7 +4,7 @@ import React from "react";
 import {Board} from "./Board";
 import {winningLines} from "../winningLines";
 import type {PlayerName} from "../playerName";
-import {BoardStatus} from "./BoardStatus";
+import {GameStatus} from "./GameStatus";
 
 export class Game extends React.Component {
 
@@ -43,7 +43,7 @@ export class Game extends React.Component {
                     />
                 </div>
                 <div className="game-info">
-                    <BoardStatus>{status}</BoardStatus>
+                    <GameStatus>{status}</GameStatus>
                     <ol>{/* TODO */}</ol>
                 </div>
             </div>
