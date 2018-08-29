@@ -23,6 +23,11 @@ type Props = {
  */
 export class GameBoard extends React.Component<Props> {
 
+    /**
+     * Renders Square React Component
+     * @param {number} id
+     * @returns {ReactElement<typeof Square>}
+     */
     renderSquare(id: number): ReactElement<typeof Square> {
         return <Square
             content={this.props.squares[id]}
@@ -32,6 +37,11 @@ export class GameBoard extends React.Component<Props> {
         />;
     }
 
+    /**
+     * Registers clicks from the Square component and pushes cloned Board to onChange function for Game component to
+     * process
+     * @param id
+     */
     handleClick(id: number): void {
         const {squares, winner, currentPlayer, onChange} = this.props;
         if (squares[id] || winner) return;
@@ -40,6 +50,10 @@ export class GameBoard extends React.Component<Props> {
         onChange(newSquares);
     }
 
+    /**
+     * Renders this components Board
+     * @returns {ReactElement<HTMLElement>}
+     */
     render(): ReactElement<HTMLElement> {
         return (
             <div>
