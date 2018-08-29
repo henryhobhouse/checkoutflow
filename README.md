@@ -16,3 +16,8 @@ react components, state, type checking and ultimately testing.
 ## To test
 
 `npm test` // TODO add tests. 
+
+
+Notes: 
+
+You need watchman installed for tests not to error on using MAC OSX
