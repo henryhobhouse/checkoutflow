@@ -1,6 +1,8 @@
 // @flow
 
 import React from "react";
+import ReactElement from "react/cjs/react.development";
+
 import {GameBoard} from "../GameBoard/GameBoard";
 import {winningLines} from "../../winningLines";
 import type {PlayerName} from "../../playerName";
@@ -23,8 +25,11 @@ type State = {
     stepNumber: number,
 }
 
-export class Game extends React.Component<Props, State> {
 
+/**
+ * Game React Module. In charge of state and game logic.
+ */
+export class Game extends React.Component<Props, State> {
 
     state = {
         history: [{
@@ -35,6 +40,11 @@ export class Game extends React.Component<Props, State> {
         stepNumber: 0,
     };
 
+    /**
+     * initialises array of #param:numberOfSquares game squares with value of null and returns.
+     * @param {number} numberOfSquares
+     * @returns {Board}
+     */
     static initialiseBoardSquares(numberOfSquares: number): Board {
         return Array(numberOfSquares).fill(null)
     }
@@ -53,7 +63,7 @@ export class Game extends React.Component<Props, State> {
         return condition ? player1 : player2;
     }
 
-    renderStatus() {
+    renderStatus(): ReactElement<typeof GameStatus> {
         const { winner, currentPlayer } = this.state;
         let status;
         if (winner) {
@@ -64,7 +74,7 @@ export class Game extends React.Component<Props, State> {
         return <GameStatus>{status}</GameStatus>
     }
 
-    renderBoard() {
+    renderBoard(): ReactElement<typeof GameBoard> {
         const { currentPlayer, winner, history, stepNumber } = this.state;
         const currentSquares = history[stepNumber].move;
         return (
@@ -90,7 +100,7 @@ export class Game extends React.Component<Props, State> {
         });
     }
 
-    renderHistory() {
+    renderHistory(): ReactElement<typeof GameHistory> {
         return (
             <GameHistory
                 history={this.state.history}
@@ -99,7 +109,7 @@ export class Game extends React.Component<Props, State> {
         )
     }
 
-    render() {
+    render(): ReactElement<HTMLElement> {
         return (
             <div className="game">
                 <div className="game-board">

@@ -1,6 +1,5 @@
 import {Game} from "./Game";
 import React from "react";
-// import {describe, test} from "jest";
 
 describe("Game", () => {
 
@@ -25,6 +24,5 @@ describe("Game", () => {
             })
         });
     })
-
 
 });

@@ -5,17 +5,25 @@ import {Square} from "../Square";
 import type {PlayerName} from "../../playerName";
 import type {SquareContent} from "../../squareContent";
 import type {Board} from "../../board";
+import ReactElement from "react/cjs/react.development";
 
 type Props = {
+    /** Array of squares that holds SquareContent */
     squares: Board;
+    /** Current Player "X" or "O" */
     currentPlayer: PlayerName;
+    /** Function passed by Game to be called upon when square is clicked */
     onChange: (Board) => void;
+    /** Winner. Initialises on null */
     winner: SquareContent;
 };
 
+/**
+ * GameBoard React Module. Renders all Squares with values as passed to it by Game
+ */
 export class GameBoard extends React.Component<Props> {
 
-    renderSquare(id: number) {
+    renderSquare(id: number): ReactElement<typeof Square> {
         return <Square
             content={this.props.squares[id]}
             onClick={ () => {
@@ -32,7 +40,7 @@ export class GameBoard extends React.Component<Props> {
         onChange(newSquares);
     }
 
-    render() {
+    render(): ReactElement<HTMLElement> {
         return (
             <div>
                 <div className="board-row">

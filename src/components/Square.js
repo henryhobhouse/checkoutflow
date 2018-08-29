@@ -1,6 +1,7 @@
 // @flow
 
 import React from "react";
+import ReactElement from "react/cjs/react.development";
 import type {SquareContent} from "../squareContent";
 
 type Props = {
@@ -8,7 +9,7 @@ type Props = {
     onClick: () => void,
 }
 
-export function Square(props: Props) {
+export function Square(props: Props): ReactElement<HTMLElement> {
 
     return (
         <button
