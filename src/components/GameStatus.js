@@ -1,8 +1,9 @@
+// @flow
+
 import React from "react";
-import type {PlayerName} from "../playerName";
 
 type Props = {
-    children: PlayerName,
+    children: string,
 }
 
 export function GameStatus(props: Props) {

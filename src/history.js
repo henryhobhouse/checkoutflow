@@ -1,3 +1,5 @@
+// @flow
+
 import type {Board} from "./board";
 
 type Step = {

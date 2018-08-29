@@ -1,15 +1,16 @@
-/* @flow */
+// @flow
 
 import * as React from "react";
-import {Square} from "./Square";
-import type {PlayerName} from "../playerName";
-import type {SquareValues} from "../squareValues";
+import {Square} from "../Square";
+import type {PlayerName} from "../../playerName";
+import type {SquareContent} from "../../squareContent";
+import type {Board} from "../../board";
 
 type Props = {
-    squares: Array<SquareValues>;
+    squares: Board;
     currentPlayer: PlayerName;
-    onChange: (SquareValues) => void;
-    winner: SquareValues;
+    onChange: (Board) => void;
+    winner: SquareContent;
 };
 
 export class GameBoard extends React.Component<Props> {
@@ -26,7 +27,7 @@ export class GameBoard extends React.Component<Props> {
     handleClick(id: number): void {
         const {squares, winner, currentPlayer, onChange} = this.props;
         if (squares[id] || winner) return;
-        const newSquares = squares.slice();
+        const newSquares: Board = squares.slice();
         newSquares[id] = currentPlayer;
         onChange(newSquares);
     }

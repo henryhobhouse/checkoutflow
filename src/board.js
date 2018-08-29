@@ -1,3 +1,5 @@
-import type {SquareValues} from "./squareValues";
+// @flow
 
-export type Board = Array<SquareValues>;
+import type {SquareContent} from "./squareContent";
+
+export type Board = Array<SquareContent>;

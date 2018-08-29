@@ -1,10 +1,10 @@
-/* @flow */
+// @flow
 
-import type {PlayerName} from "../playerName";
 import React from "react";
+import type {SquareContent} from "../squareContent";
 
 type Props = {
-    content: PlayerName,
+    content: SquareContent,
     onClick: () => void,
 }
 

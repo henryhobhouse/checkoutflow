@@ -1,14 +1,14 @@
-/* @flow */
+// @flow
 
 import React from "react";
-import {GameBoard} from "./GameBoard";
-import {winningLines} from "../winningLines";
-import type {PlayerName} from "../playerName";
-import {GameStatus} from "./GameStatus";
-import {GameHistory} from "./GameHistory";
-import type {SquareValues} from "../squareValues";
-import type {Board} from "../board";
-import type {History} from "../history";
+import {GameBoard} from "../GameBoard/GameBoard";
+import {winningLines} from "../../winningLines";
+import type {PlayerName} from "../../playerName";
+import {GameStatus} from "../GameStatus";
+import {GameHistory} from "../GameHistory/GameHistory";
+import type {SquareContent} from "../../squareContent";
+import type {Board} from "../../board";
+import type {History} from "../../history";
 
 const player1: PlayerName = "X";
 const player2: PlayerName = "O";
@@ -19,7 +19,7 @@ type Props = {}
 type State = {
     history: History,
     currentPlayer: PlayerName,
-    winner: SquareValues,
+    winner: SquareContent,
     stepNumber: number,
 }
 
@@ -28,18 +28,18 @@ export class Game extends React.Component<Props, State> {
 
     state = {
         history: [{
-            move: Game.initialiseSquares(boardSize),
+            move: Game.initialiseBoardSquares(boardSize),
         }],
         currentPlayer: player1,
         winner: null,
         stepNumber: 0,
     };
 
-    static initialiseSquares(numberOfSquares: number): Board {
+    static initialiseBoardSquares(numberOfSquares: number): Board {
         return Array(numberOfSquares).fill(null)
     }
 
-    static calculateWinner(squares: Array<SquareValues>): SquareValues {
+    static calculateWinner(squares: Array<SquareContent>): SquareContent {
         for (const line of winningLines) {
             const [a, b, c] = line;
             if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
@@ -70,10 +70,24 @@ export class Game extends React.Component<Props, State> {
         return (
             <GameBoard squares={ currentSquares }
                        currentPlayer={ currentPlayer }
-                       onChange={ (squares) => this.onChange(squares) }
+                       onChange={ (squares: Board) => this.onChange(squares) }
                        winner={ winner }
             />
         )
+    }
+
+    onChange(squares: Board): void {
+        const {currentPlayer, history, stepNumber} = this.state;
+        const updatedHistory = history.slice(0, stepNumber + 1);
+        const nextPlayer = Game.getPlayer(currentPlayer !== player1);
+        this.setState({
+            history: updatedHistory.concat([{
+                move: squares,
+            }]),
+            stepNumber: stepNumber + 1,
+            currentPlayer: nextPlayer,
+            winner: Game.calculateWinner(squares)
+        });
     }
 
     renderHistory() {
@@ -107,20 +121,6 @@ export class Game extends React.Component<Props, State> {
             currentPlayer: Game.getPlayer((step % 2) === 0),
             winner: winnerUpdate,
         })
-    }
-
-    onChange(squares: Board): void {
-        const {currentPlayer, history, stepNumber} = this.state;
-        const updatedHistory = history.slice(0, stepNumber + 1);
-        const nextPlayer = Game.getPlayer(currentPlayer !== player1);
-        this.setState({
-            history: updatedHistory.concat([{
-                move: squares,
-            }]),
-            stepNumber: history.length,
-            currentPlayer: nextPlayer,
-            winner: Game.calculateWinner(squares)
-        });
     }
 
 }

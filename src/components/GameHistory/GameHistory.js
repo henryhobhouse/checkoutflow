@@ -1,11 +1,11 @@
-/* @flow */
+// @flow
 
 import React from "react";
-import type {Board} from "../board";
+import type {History} from "../../history";
 
 type Props = {
-    history: Array<Board>;
-    jumpTo: (Board) => void;
+    history: History;
+    jumpTo: (number) => void;
 }
 
 export class GameHistory extends React.Component<Props> {
