@@ -17,6 +17,10 @@ type Props = {
  */
 export class GameHistory extends React.Component<Props> {
 
+    /**
+     * Renders this components History in the form of a button list linked to each move step
+     * @returns {any[]}
+     */
     render(): ReactElement<HTMLElement> {
         const {history, jumpTo} = this.props;
         return history.map( (step, move) => {
