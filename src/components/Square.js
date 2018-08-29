@@ -9,6 +9,11 @@ type Props = {
     onClick: () => void,
 }
 
+/**
+ * Square React Component as individual object of the game board
+ * @param {Props} props
+ * @returns {ReactElement<HTMLElement>}
+ */
 export function Square(props: Props): ReactElement<HTMLElement> {
 
     return (
